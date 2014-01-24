@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Stream Statistic</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      var i = 0 ;
+
+      $(function() {
+        window.setInterval("toggleImage()", 60000) ;
+      }) ;
+
+      function toggleImage() {
+        var d = new Date();
+        var img0 = "img0" ;
+        var img1 = "img1" ;
+        if (i++%2 == 0) {
+          img0 = "img1" ;
+          img1 = "img0" ;
+        }
+
+        $("img#" + img1).one("load", function(evt) {
+            $("#stats_img > img").toggle() ;
+        }) ;
+        $("img#" + img1).attr("src", "/stats/stream_12h.png?" + d.getTime()) ;
+      }
+
+    </script>
+    <style type="text/css">
+      #img1 { display: none ; }
+    </style>
+  </head>
+  <body>
+    <h1>Chicken Town Radio Statistics</h1>
+    <h3>12 Hours</h3>
+    <div id="stats_img">
+      <img src="/stats/stream_12h.png" id="img0" />
+      <img src="/stats/stream_12h.png" id="img1" />
+    </div>
+    <h3>7 Days</h3>
+    <img src="/stats/stream_7d.png" />
+    <h3>1 Month</h3>
+    <img src="/stats/stream_1m.png" />
+  </body>
+</html>
+
