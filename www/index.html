@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <style>
+      body {
+        background:#fff;
+        font-family:Verdana, Helvetica, Arial, sans-serif;
+        margin:0;
+        padding:0;
+        background-image:url('https://spodder.com/~yeled/chickentown_page1.jpg');
+        background-repeat:no-repeat;
+        background-attachment:fixed;
+        background-position:center top;
+      }
+#twitter {
+    position:relative;
+    width: 500px;
+    height: 200px;
+    text-align: center;
+    left:30%;
+    top:35%;
+}
+a.click-div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
+}
+    </style>
+  </head>
+  <body>
+<div id="twitter">
+    <a href="http://twitter.com/chickentown_e2" class="click-div" target="_blank"></a>
+</div>
+    <div id="jquery_jplayer_1"></div>
+    <script type="text/javascript" src="/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/jquery.jplayer.min.js"></script>
+    <script type="text/javascript">
+      $( document ).ready( function() {
+        $( "#jquery_jplayer_1" ).jPlayer( {
+          swfPath: "js",
+          loop: true,
+          ready: function() {
+            console.log( "jplayer ready" );
+            $( this ).jPlayer( "setMedia", { "mp3": "http://chickentownradio.co.uk:8000/mp3" } ).jPlayer( "play" );
+          }
+        } );
+        $( "#jquery_jplayer_1" ).bind( $.jPlayer.event.error, function( e ) {
+          console.log( "error: " + e.jPlayer.error.type );
+          switch( e.jPlayer.error.type ) {
+            case $.jPlayer.error.URL:
+              $( this ).jPlayer( "setMedia", { "mp3": "http://chickentownradio.co.uk/buffalo.mp3" } ).jPlayer( "play" );
+              console.log( "Can not connect to mp3 stream, fall back to standard file" );
+              alert("If you can hear Neneh then you need to reload.\nSorry!");
+              break;
+
+            case $.jPlayer.error.URL_NOT_SET:
+              console.log( "URL not set, drop to default" );
+              break;
+          }
+        } );
+
+        var click = document.ontouchstart === undefined ? 'click' : 'touchstart';
+        var kickoff = function () {
+          $("#jquery_jplayer_1").jPlayer("play");
+          document.documentElement.removeEventListener(click, kickoff, true);
+        };
+        
+        document.documentElement.addEventListener(click, kickoff, true);
+
+      } );
+
+    </script>
+  </body>
+</html>
